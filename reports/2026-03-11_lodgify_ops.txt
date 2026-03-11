@@ -1,0 +1,20 @@
+Aventuras Villas Lodgify Ops Report (2026-03-11)
+Properties: 2 | Reservations: 10
+
+Status breakdown:
+- Booked: 10
+
+By property:
+- Chic Villa Sorella | 24/7 Security | Near to the Beach: 2 reservations
+- Casa Aventura|Luxury Oasis|24/7 Security |Close to Beaches: 8 reservations
+
+Average ADR (historical):
+- No ADR values available from API payload.
+
+Occupancy next 60 days (estimated):
+- Chic Villa Sorella | 24/7 Security | Near to the Beach: 0.0%
+- Casa Aventura|Luxury Oasis|24/7 Security |Close to Beaches: 0.0%
+
+Pricing actions:
+- Chic Villa Sorella | 24/7 Security | Near to the Beach: LOW pickup: consider -8% to -12% on next 21 days + 2-night min stay.
+- Casa Aventura|Luxury Oasis|24/7 Security |Close to Beaches: LOW pickup: consider -8% to -12% on next 21 days + 2-night min stay.

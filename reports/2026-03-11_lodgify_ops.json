@@ -1,0 +1,35 @@
+{
+  "date": "2026-03-11",
+  "properties_count": 2,
+  "reservations_count": 10,
+  "status_breakdown": {
+    "Booked": 10
+  },
+  "source_breakdown": {
+    "Airbnb": 1,
+    "airbnb": 7,
+    "vrbo": 1,
+    "Manual": 1
+  },
+  "reservation_breakdown_by_property": {
+    "Chic Villa Sorella | 24/7 Security | Near to the Beach": 2,
+    "Casa Aventura|Luxury Oasis|24/7 Security |Close to Beaches": 8
+  },
+  "avg_adr_by_property": {},
+  "occupancy_next_60d_pct_by_property": {
+    "Chic Villa Sorella | 24/7 Security | Near to the Beach": 0.0,
+    "Casa Aventura|Luxury Oasis|24/7 Security |Close to Beaches": 0.0
+  },
+  "pricing_actions": [
+    {
+      "property": "Chic Villa Sorella | 24/7 Security | Near to the Beach",
+      "occupancy_next_60d_pct": 0.0,
+      "action": "LOW pickup: consider -8% to -12% on next 21 days + 2-night min stay."
+    },
+    {
+      "property": "Casa Aventura|Luxury Oasis|24/7 Security |Close to Beaches",
+      "occupancy_next_60d_pct": 0.0,
+      "action": "LOW pickup: consider -8% to -12% on next 21 days + 2-night min stay."
+    }
+  ]
+}
