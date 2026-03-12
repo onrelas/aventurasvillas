@@ -294,6 +294,27 @@
     footer .footer-links a:hover { color: var(--gold); }
     footer p { font-size: 0.8rem; }
 
+
+
+    /* GUIDES */
+    .guides { background: #faf8f4; }
+    .guides-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-top: 36px; }
+    .guide-card {
+      text-decoration: none; color: inherit; background: #fff; border: 1px solid #ece6dd; border-radius: 12px;
+      padding: 24px; transition: transform .2s, box-shadow .2s, border-color .2s;
+    }
+    .guide-card:hover { transform: translateY(-4px); border-color: var(--gold); box-shadow: 0 8px 30px rgba(0,0,0,.08); }
+    .guide-card h4 { margin-bottom: 10px; color: var(--dark); font-size: 1.15rem; }
+    .guide-card p { color: var(--light-text); font-size: .95rem; line-height: 1.7; margin-bottom: 12px; }
+    .guide-card span { color: var(--jungle); font-weight: 600; font-size: .9rem; }
+
+    /* FAQ */
+    .faq { background: var(--white); }
+    .faq-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; margin-top: 28px; }
+    .faq-item { background: var(--sand); border-radius: 12px; padding: 20px; }
+    .faq-item h4 { margin-bottom: 8px; color: var(--dark); font-size: 1.02rem; }
+    .faq-item p { color: var(--text); font-size: .92rem; line-height: 1.65; }
+
     /* RESPONSIVE */
     @media (max-width: 768px) {
       nav { padding: 16px 20px; }
@@ -318,6 +339,7 @@
     <a href="#why">Why Us</a>
     <a href="#location">Location</a>
     <a href="#land">Land Project</a>
+    <a href="blog/">Blog</a>
     <a href="https://aventurasvillas.com" class="nav-cta">Book Now</a>
   </div>
 </nav>
@@ -331,6 +353,7 @@
     <div class="hero-btns">
       <a href="https://aventurasvillas.com" class="btn-primary">Check Availability</a>
       <a href="#villas" class="btn-outline">Explore the Villas</a>
+      <a href="blog/events-calendar.html" class="btn-outline">View Events Calendar</a>
     </div>
   </div>
   <div class="hero-stats">
@@ -440,6 +463,11 @@
         <h4>Best of Tulum</h4>
         <p>Aldea Zama's top restaurants, coworking spaces, and shops are all within walking distance.</p>
       </div>
+      <div class="feature">
+        <div class="feature-icon">🤝</div>
+        <h4>Direct Booking Support</h4>
+        <p>Book direct for clear communication, practical planning support, and a smoother pre-arrival experience.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -505,6 +533,47 @@
   </div>
 </section>
 
+
+<!-- PLAN YOUR STAY -->
+<section class="guides">
+  <div class="container">
+    <div class="section-tag">Plan Your Stay</div>
+    <h2 class="section-title">Use our Tulum planning guides before you arrive</h2>
+    <p class="section-sub">Make better date decisions, plan around events, and match your stay style to the right villa.</p>
+    <div class="guides-grid">
+      <a class="guide-card" href="blog/events-calendar.html">
+        <h4>Tulum Events Calendar</h4>
+        <p>Monthly event and seasonality planning to choose better travel windows.</p>
+        <span>Open guide →</span>
+      </a>
+      <a class="guide-card" href="blog/nightlife-concert-calendar.html">
+        <h4>Nightlife & Concert Calendar</h4>
+        <p>Plan event nights with smarter transport and recovery pacing.</p>
+        <span>Open guide →</span>
+      </a>
+      <a class="guide-card" href="blog/">
+        <h4>Villa Guest Blog</h4>
+        <p>Itineraries, logistics tips, and booking strategy for Casa Aventura and Villa Sorella.</p>
+        <span>Read articles →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="container">
+    <div class="section-tag">FAQ</div>
+    <h2 class="section-title">Quick answers before you book</h2>
+    <div class="faq-grid">
+      <div class="faq-item"><h4>How close are the villas to the beach?</h4><p>About 5 minutes by car or around 15 minutes by bike from Aldea Zama.</p></div>
+      <div class="faq-item"><h4>Are the villas good for families and groups?</h4><p>Yes. Both Casa Aventura and Villa Sorella are designed for group comfort with private pools and spacious layouts.</p></div>
+      <div class="faq-item"><h4>Can we work remotely from the villas?</h4><p>Yes. Villa Sorella includes high-speed Starlink internet, ideal for remote work and video calls.</p></div>
+      <div class="faq-item"><h4>How do we book?</h4><p>Use the direct booking links on this page or message us on WhatsApp for quick help and availability.</p></div>
+    </div>
+  </div>
+</section>
+
 <!-- TESTIMONIALS -->
 <section class="testimonials">
   <div class="container">
@@ -552,10 +621,38 @@
     <a href="https://aventurasvillas.com">Main Website</a>
     <a href="https://aventurasvillas.com/en/chic-villa-sorella-247-security-near-to-the-beach">Villa Sorella</a>
     <a href="https://aventurasvillas.com">Casa Aventura</a>
+    <a href="blog/">Blog</a>
+    <a href="#faq">FAQ</a>
     <a href="https://instagram.com/aventurasvillas">Instagram</a>
   </div>
   <p>© 2025 Aventuras Villas · Aldea Zama, Tulum, Mexico · All rights reserved.</p>
 </footer>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LodgingBusiness",
+  "name": "Aventuras Villas",
+  "url": "https://onrelas.github.io/aventurasvillas/",
+  "areaServed": "Tulum, Mexico",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Tulum",
+    "addressRegion": "Quintana Roo",
+    "addressCountry": "MX"
+  },
+  "amenityFeature": [
+    {"@type": "LocationFeatureSpecification", "name": "Private Pool", "value": true},
+    {"@type": "LocationFeatureSpecification", "name": "High-Speed WiFi", "value": true},
+    {"@type": "LocationFeatureSpecification", "name": "24/7 Security", "value": true}
+  ],
+  "sameAs": [
+    "https://instagram.com/aventurasvillas",
+    "https://linktr.ee/aventurasvillastulum"
+  ]
+}
+</script>
 
 </body>
 </html>
