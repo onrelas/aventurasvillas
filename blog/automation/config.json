@@ -1,0 +1,16 @@
+{
+  "brand": "Aventuras Villas",
+  "voice": "warm-luxury-host",
+  "cadence_per_week": 2,
+  "target_word_count": [700, 1200],
+  "primary_cta": "https://aventurasvillas.com",
+  "secondary_cta": "https://linktr.ee/aventurasvillastulum",
+  "hero_images": [
+    "../../images/casa-aventura-hero.jpg",
+    "../../images/villa-sorella-room2.jpg",
+    "../../images/tikal-exterior.jpg",
+    "../../images/villa-sorella-drone.jpg",
+    "../../images/tikal-pool.jpg",
+    "../../images/casa-aventura-living.jpg"
+  ]
+}
