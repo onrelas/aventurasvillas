@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://onrelas.github.io/aventurasvillas/sitemap.xml
