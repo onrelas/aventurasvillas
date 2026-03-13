@@ -150,6 +150,7 @@
       position: relative; overflow: hidden;
     }
     .villa-img img { width: 100%; height: 100%; object-fit: cover; }
+    .villa-img video { width: 100%; height: 100%; object-fit: cover; display: block; }
     .villa-badge {
       position: absolute; top: 20px; left: 20px;
       background: var(--gold); color: var(--dark);
@@ -456,7 +457,9 @@
       <!-- Villa Sorella -->
       <div class="villa-card">
         <div class="villa-img">
-          <img src="images/villa-sorella-hero.jpg" alt="Villa Sorella private pool Tulum Aldea Zama"/>
+          <video autoplay muted loop playsinline controls preload="metadata" poster="images/villa-sorella-hero.jpg" aria-label="Villa Sorella video tour">
+            <source src="videos/villa-sorella.mp4" type="video/mp4" />
+          </video>
           <div class="villa-badge">Villa Sorella</div>
         </div>
         <div class="villa-body">
@@ -479,7 +482,9 @@
       <!-- Casa Aventura -->
       <div class="villa-card">
         <div class="villa-img">
-          <img src="images/casa-aventura-hero.jpg" alt="Casa Aventura luxury villa Tulum dining and pool view"/>
+          <video autoplay muted loop playsinline controls preload="metadata" poster="images/casa-aventura-hero.jpg" aria-label="Casa Aventura video tour">
+            <source src="videos/casa-aventura.mp4" type="video/mp4" />
+          </video>
           <div class="villa-badge">Casa Aventura</div>
         </div>
         <div class="villa-body">
