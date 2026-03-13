@@ -187,6 +187,23 @@
     .feature h4 { font-size: 1.05rem; color: var(--dark); margin-bottom: 8px; }
     .feature p { font-size: 0.9rem; color: var(--light-text); line-height: 1.6; }
 
+    /* BUYER FAST TRACK */
+    .buyer-fast-track { background: #f6f2e9; }
+    .buyer-box { background:#fff; border:1px solid #e7decf; border-radius:12px; padding:24px; margin-top:28px; }
+    .buyer-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap:14px; margin-top:16px; }
+    .buyer-card { border:1px solid #efe6d7; border-radius:10px; padding:16px; background:#fff; }
+    .buyer-card h4 { margin-bottom:8px; }
+    .buyer-card p { font-size:.92rem; color:var(--light-text); margin-bottom:12px; line-height:1.6; }
+    .buyer-btn { display:inline-block; text-decoration:none; font-weight:700; color:#1f362d; border:1px solid #1f362d; padding:10px 14px; border-radius:7px; }
+    .buyer-btn:hover { background:#1f362d; color:#fff; }
+    .quickline { margin-top:14px; font-size:.9rem; color:#5e5a52; }
+
+    .sticky-buyer-cta {
+      position: fixed; right: 16px; bottom: 16px; z-index: 110;
+      background:#1f362d; color:#fff; text-decoration:none; padding:12px 16px; border-radius:999px;
+      font-weight:700; box-shadow:0 8px 24px rgba(0,0,0,.22);
+    }
+
     /* LOCATION */
     .location { background: var(--jungle); color: var(--white); }
     .location .section-title { color: var(--white); }
@@ -409,6 +426,36 @@
 </section>
 
 
+
+<!-- BUYER FAST TRACK -->
+<section class="buyer-fast-track" id="buy">
+  <div class="container">
+    <div class="section-tag">Buyer Fast Track</div>
+    <h2 class="section-title">Ready to buy in Tulum? Get pricing and details in one message.</h2>
+    <p class="section-sub">For serious buyers, we can share current availability, pricing range, and the best fit between Casa Aventura, Villa Sorella, and the Villa Tikal project.</p>
+
+    <div class="buyer-box">
+      <div class="buyer-grid">
+        <div class="buyer-card">
+          <h4>Buy Casa Aventura</h4>
+          <p>Family-friendly luxury villa with strong lifestyle and rental appeal in Aldea Zama.</p>
+          <a class="buyer-btn" href="https://wa.me/16478346090?text=Hi%2C%20I%E2%80%99m%20interested%20in%20buying%20Casa%20Aventura.%20Please%20share%20pricing%20and%20details.">Request Casa Aventura Details</a>
+        </div>
+        <div class="buyer-card">
+          <h4>Buy Villa Sorella</h4>
+          <p>Premium social-luxury villa ideal for groups, remote work, and high-end short-stay demand.</p>
+          <a class="buyer-btn" href="https://wa.me/16478346090?text=Hi%2C%20I%E2%80%99m%20interested%20in%20buying%20Villa%20Sorella.%20Please%20share%20pricing%20and%20details.">Request Villa Sorella Details</a>
+        </div>
+        <div class="buyer-card">
+          <h4>Invest in Villa Tikal Project</h4>
+          <p>Project-focused opportunity for buyers targeting premium Tulum real estate exposure.</p>
+          <a class="buyer-btn" href="https://wa.me/16478346090?text=Hi%2C%20I%E2%80%99m%20interested%20in%20the%20Villa%20Tikal%20project.%20Please%20share%20pricing%20and%20timeline.">Request Villa Tikal Investment Pack</a>
+        </div>
+      </div>
+      <div class="quickline">Prefer a quick conversation? <a href="https://wa.me/16478346090?text=Hi%2C%20I%E2%80%99d%20like%20a%20quick%20call%20about%20buying%20in%20Tulum.">Message us on WhatsApp</a>.</div>
+    </div>
+  </div>
+</section>
 
 
 <!-- VILLAS -->
