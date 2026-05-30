@@ -25,6 +25,22 @@ BANNED_PHRASES=(
     "guaranteed"
 )
 
+# New Banned Phrases for template/incomplete drafts
+BANNED_TEMPLATE_PHRASES=(
+    "Section outline"
+    "Writing cues"
+    "Hook:"
+    "expand to full article"
+    "Target 700"
+    "Intent:"
+    "Drafted"
+    "optimized for conversion"
+    "warm-host voice"
+    "placeholder"
+    "TODO"
+    "lorem ipsum"
+)
+
 # Specific URLs that are considered unverified if they appear in the draft,
 # as sub-paths of aventuravillas.com for specific villas are not in FACTS_CONTRACT.md
 UNVERIFIED_VILLA_URLS=(
@@ -66,13 +82,17 @@ if [ ! -f "$FACTS_CONTRACT_PATH" ]; then
 fi
 echo "# All required input files found."
 
+# Read the content of the draft file into a variable for multiple checks
+DRAFT_CONTENT=$(cat "$DRAFT_FILE_PATH")
+
 # --- Run QA Checks ---
 QA_STATUS="PASS"
 REASONS=()
 
+# Existing checks
 # Check for banned AI/travel phrases
 for phrase in "${BANNED_PHRASES[@]}"; do
-    if grep -qEi "$phrase" "$DRAFT_FILE_PATH"; then
+    if echo "$DRAFT_CONTENT" | grep -qEi "$phrase"; then
         QA_STATUS="FAIL"
         REASONS+=("Draft contains banned phrase: '$phrase'")
     fi
@@ -80,13 +100,13 @@ done
 
 # Check for fake/unverified villa-specific URLs
 for url_fragment in "${UNVERIFIED_VILLA_URLS[@]}"; do
-    if grep -q "$url_fragment" "$DRAFT_FILE_PATH"; then
+    if echo "$DRAFT_CONTENT" | grep -q "$url_fragment"; then
         QA_STATUS="FAIL"
         REASONS+=("Draft contains unverified villa-specific URL fragment: '$url_fragment'")
     fi
 done
 
-# Check if draft assigns Starlink to Casa Aventura using specific phrases
+# Check if draft assigns Starlink to Casa Aventura (not in Facts Contract)
 STARLINK_CASA_AVENTURA_PATTERNS=(
     "Casa Aventura offers Starlink"
     "Casa Aventura includes Starlink"
@@ -95,7 +115,7 @@ STARLINK_CASA_AVENTURA_PATTERNS=(
     "Starlink internet at Casa Aventura"
 )
 for pattern in "${STARLINK_CASA_AVENTURA_PATTERNS[@]}"; do
-    if grep -qEi "$pattern" "$DRAFT_FILE_PATH"; then
+    if echo "$DRAFT_CONTENT" | grep -qEi "$pattern"; then
         QA_STATUS="FAIL"
         REASONS+=("Draft assigns Starlink to Casa Aventura (not in Facts Contract) with phrase: '$pattern'")
         break # Exit loop on first match
@@ -112,12 +132,61 @@ VILLA_TIKAL_RENTAL_PATTERNS=(
     "Villa Tikal a rental"
 )
 for pattern in "${VILLA_TIKAL_RENTAL_PATTERNS[@]}"; do
-    if grep -qEi "$pattern" "$DRAFT_FILE_PATH"; then
+    if echo "$DRAFT_CONTENT" | grep -qEi "$pattern"; then
         QA_STATUS="FAIL"
         REASONS+=("Draft refers to Villa Tikal as a rental villa (it's an investment project) with phrase: '$pattern'")
         break # Exit loop on first match
     fi
 done
+
+# New checks for incomplete/template drafts
+
+# Check for banned template phrases
+for phrase in "${BANNED_TEMPLATE_PHRASES[@]}"; do
+    if echo "$DRAFT_CONTENT" | grep -qFi "$phrase"; then # -F for fixed string, -i for case-insensitive
+        QA_STATUS="FAIL"
+        REASONS+=("Draft contains template phrase: '$phrase'")
+    fi
+done
+
+# Minimum word count (800 words)
+WORD_COUNT=$(echo "$DRAFT_CONTENT" | wc -w)
+if [ "$WORD_COUNT" -lt 800 ]; then
+    QA_STATUS="FAIL"
+    REASONS+=("Draft has less than 800 words (current: $WORD_COUNT)")
+fi
+
+# Minimum H2 count (4 H2 tags)
+H2_COUNT=$(echo "$DRAFT_CONTENT" | grep -cE '<h2[^>]*>')
+if [ "$H2_COUNT" -lt 4 ]; then
+    QA_STATUS="FAIL"
+    REASONS+=("Draft has less than 4 H2 headings (current: $H2_COUNT)")
+fi
+
+# Must contain a meta description tag
+if ! echo "$DRAFT_CONTENT" | grep -qE '<meta[^>]*name="description"[^>]*content="[^"]+"[^>]*>'; then
+    QA_STATUS="FAIL"
+    REASONS+=("Draft is missing a valid meta description tag")
+fi
+
+# Must contain at least one CTA link (assuming CTA links have class="btn")
+if ! echo "$DRAFT_CONTENT" | grep -qE '<a[^>]*class="[^"]*btn[^"]*"[^>]*href="https?://[^"]+"[^>]*>'; then
+    QA_STATUS="FAIL"
+    REASONS+=("Draft is missing at least one CTA button link")
+fi
+
+# Must contain either FAQ or Frequently Asked Questions
+if ! echo "$DRAFT_CONTENT" | grep -qEi '(FAQ|Frequently Asked Questions)'; then
+    QA_STATUS="FAIL"
+    REASONS+=("Draft does not contain 'FAQ' or 'Frequently Asked Questions'")
+fi
+
+# Must not contain "QA pass" inside the draft body
+if echo "$DRAFT_CONTENT" | grep -qFi "QA pass"; then
+    QA_STATUS="FAIL"
+    REASONS+=("Draft body contains 'QA pass'")
+fi
+
 
 # --- Output QA Result ---
 if [ "$QA_STATUS" = "PASS" ]; then
