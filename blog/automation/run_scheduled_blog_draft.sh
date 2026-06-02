@@ -58,7 +58,8 @@ NEWEST_DRAFT_PATH=""
 if [ -d "$DRAFTS_DIR" ]; then
     # Use printf and sort for robust finding of the newest file by modification time
     # This handles filenames with spaces correctly.
-    NEWEST_DRAFT_PATH=$(find "$DRAFTS_DIR" -maxdepth 1 -type f -printf '%T@ %p\n' 2>/dev/null | sort -k1 -nr | head -n 1 | cut -d' ' -f2-)
+    # Find the newest .html draft matching YYYY-MM-DD_* pattern
+    NEWEST_DRAFT_PATH=$(find "$DRAFTS_DIR" -maxdepth 1 -type f -name "[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]_*.html" -printf '%T@ %p\n' 2>/dev/null | sort -k1 -nr | head -n 1 | cut -d' ' -f2-)
 fi
 
 echo "newest draft path: ${NEWEST_DRAFT_PATH:-\"no draft found\"}" # Handle empty case

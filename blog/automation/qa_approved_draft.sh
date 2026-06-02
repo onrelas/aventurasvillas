@@ -41,6 +41,14 @@ BANNED_TEMPLATE_PHRASES=(
     "lorem ipsum"
 )
 
+# New Banned Phrases for wrong business context
+BANNED_BUSINESS_PHRASES=(
+    "Memoria Sagrada"
+    "prompt set"
+    "digital print"
+    "Mayan art prompt language"
+)
+
 # Specific URLs that are considered unverified if they appear in the draft,
 # as sub-paths of aventuravillas.com for specific villas are not in FACTS_CONTRACT.md
 UNVERIFIED_VILLA_URLS=(
@@ -81,6 +89,12 @@ if [ ! -f "$FACTS_CONTRACT_PATH" ]; then
     exit 0
 fi
 echo "# All required input files found."
+
+# Validate file extension
+if [[ "$DRAFT_FILE_PATH" == *.md ]]; then
+    QA_STATUS="FAIL"
+    REASONS+=("Draft file has .md extension, expected .html")
+fi
 
 # Read the content of the draft file into a variable for multiple checks
 DRAFT_CONTENT=$(cat "$DRAFT_FILE_PATH")
@@ -148,6 +162,20 @@ for phrase in "${BANNED_TEMPLATE_PHRASES[@]}"; do
         REASONS+=("Draft contains template phrase: '$phrase'")
     fi
 done
+
+# Check for banned business phrases
+for phrase in "${BANNED_BUSINESS_PHRASES[@]}"; do
+    if echo "$DRAFT_CONTENT" | grep -qFi "$phrase"; then # -F for fixed string, -i for case-insensitive
+        QA_STATUS="FAIL"
+        REASONS+=("Draft contains wrong business context phrase: '$phrase'")
+    fi
+done
+
+# Must contain "Aventuras Villas" or "Tulum" (business identity check)
+if ! echo "$DRAFT_CONTENT" | grep -qEi "(Aventuras Villas|Tulum)"; then
+    QA_STATUS="FAIL"
+    REASONS+=("Draft does not contain 'Aventuras Villas' or 'Tulum' for business identity")
+fi
 
 # Minimum word count (800 words)
 WORD_COUNT=$(echo "$DRAFT_CONTENT" | wc -w)
