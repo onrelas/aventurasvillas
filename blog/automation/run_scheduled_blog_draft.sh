@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Script purpose: Deterministically find the newest blog draft, run QA, and report status.
-# This version does NOT generate a new draft using an LLM.
+# Script purpose: Validate a provided blog draft, run QA, and report status.
+# This script does NOT generate a new draft using an LLM.
 
 set -e # Exit immediately if a command exits with a non-zero status.
 
@@ -53,28 +53,61 @@ if [ "$QUALITY_CONSTITUTION_FOUND" != "yes" ] || \
     exit 0
 fi
 
-# --- Find the newest draft in blog/drafts/ ---
-NEWEST_DRAFT_PATH=""
-if [ -d "$DRAFTS_DIR" ]; then
-    # Use printf and sort for robust finding of the newest file by modification time
-    # This handles filenames with spaces correctly.
-    # Find the newest .html draft matching YYYY-MM-DD_* pattern
-    NEWEST_DRAFT_PATH=$(find "$DRAFTS_DIR" -maxdepth 1 -type f -name "[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]_*.html" -printf '%T@ %p\n' 2>/dev/null | sort -k1 -nr | head -n 1 | cut -d' ' -f2-)
-fi
-
-echo "newest draft path: ${NEWEST_DRAFT_PATH:-\"no draft found\"}" # Handle empty case
-
-if [ -z "$NEWEST_DRAFT_PATH" ]; then
+# --- Handle Draft File Path Argument ---
+if [ -z "$1" ]; then
     echo "qa script ran yes/no: no"
     echo "full QA output:"
     echo "QA_RESULT: FAIL"
-    echo "reason: no draft found in $DRAFTS_DIR"
+    echo "reason: no draft path provided"
     echo "publish status: blocked"
     exit 0
 fi
 
-# --- Run QA script on the newest draft ---
-QA_TEMP_OUTPUT=$(bash "$QA_SCRIPT" "$NEWEST_DRAFT_PATH")
+DRAFT_FILE_PATH="$1"
+echo "Aventuras-only draft path or no draft found: $DRAFT_FILE_PATH"
+
+# Validate provided draft path
+if [ ! -f "$DRAFT_FILE_PATH" ]; then
+    echo "qa script ran yes/no: no"
+    echo "full QA output:"
+    echo "QA_RESULT: FAIL"
+    echo "reason: provided draft path does not exist: $DRAFT_FILE_PATH"
+    echo "publish status: blocked"
+    exit 0
+fi
+
+# Ensure path is absolute for consistent checks
+DRAFT_FILE_PATH_ABS=$(readlink -f "$DRAFT_FILE_PATH")
+
+if [[ ! "$DRAFT_FILE_PATH_ABS" == "${DRAFTS_DIR}"* ]]; then
+    echo "qa script ran yes/no: no"
+    echo "full QA output:"
+    echo "QA_RESULT: FAIL"
+    echo "reason: provided draft path is not inside $DRAFTS_DIR: $DRAFT_FILE_PATH"
+    echo "publish status: blocked"
+    exit 0
+fi
+
+if [[ ! "$DRAFT_FILE_PATH_ABS" == *.html ]]; then
+    echo "qa script ran yes/no: no"
+    echo "full QA output:"
+    echo "QA_RESULT: FAIL"
+    echo "reason: provided draft file must end in .html: $DRAFT_FILE_PATH"
+    echo "publish status: blocked"
+    exit 0
+fi
+
+if [[ "$DRAFT_FILE_PATH_ABS" == *.md ]]; then
+    echo "qa script ran yes/no: no"
+    echo "full QA output:"
+    echo "QA_RESULT: FAIL"
+    echo "reason: provided draft file must not be .md: $DRAFT_FILE_PATH"
+    echo "publish status: blocked"
+    exit 0
+fi
+
+# --- Run QA script on the provided draft ---
+QA_TEMP_OUTPUT=$(bash "$QA_SCRIPT" "$DRAFT_FILE_PATH")
 QA_EXIT_CODE=$?
 
 echo "qa script ran yes/no: yes"
